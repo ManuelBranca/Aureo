@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<User> createController (@RequestBody User user) {
+    public ResponseEntity<String> createController (@RequestBody User user) {
         try {
             return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
         } catch (Exception e) {
