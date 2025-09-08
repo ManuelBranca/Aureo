@@ -16,7 +16,7 @@ public class UserService {
         return (List<User>) userDao.findAll();
     }
 
-    public User create (User user) throws Exception {
+    public String create (User user) throws Exception {
         if (userDao.existsByUsername(user.getUsername())) {
             throw new Exception("El nombre de usuario ya está en uso.");
         }
@@ -26,7 +26,10 @@ public class UserService {
 
         User finalUser = new User(user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate());
         userDao.save(finalUser);
-        return finalUser;
+        return "Usuario creado con éxito!";
     }
 
+    public User findById (Long id){
+        return userDao.findById(id).orElseThrow();
+    }
 }

@@ -14,4 +14,5 @@ public interface UserDao extends CrudRepository<User, Long> {
 
     @Query("SELECT COUNT(u) > 0 FROM User u WHERE u.email = :email")
     boolean existsByEmail(@Param("email") String email);
+    
 }
