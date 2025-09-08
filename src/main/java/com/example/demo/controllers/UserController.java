@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Status;
 import com.example.demo.models.User;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -32,6 +32,15 @@ public class UserController {
             return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/delete")
+    public ResponseEntity<Status> delete (@RequestParam Long id) {
+        try {
+            return new ResponseEntity<>(userService.delete(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(userService.delete(id) ,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

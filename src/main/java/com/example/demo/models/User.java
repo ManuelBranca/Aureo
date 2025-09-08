@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +21,11 @@ public class User {
     private String email;
     private String password;
     private Date birthDate;
+    private Boolean active;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "roleId")
+    private Role roleId;
 
     public User(String username, String email, String password, Date birthDate) {
         this.username = username;

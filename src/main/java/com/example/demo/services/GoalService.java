@@ -40,7 +40,5 @@ public class GoalService {
 
         goalDao.save(finalGoal);
         return "Meta creada con éxito!";
-
-}
-
+    }
 }
