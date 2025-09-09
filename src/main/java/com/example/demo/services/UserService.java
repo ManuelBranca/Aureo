@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dao.UserDao;
+import com.example.demo.enums.Messages;
 import com.example.demo.enums.RoleId;
 import com.example.demo.models.Status;
 import com.example.demo.models.User;
@@ -25,36 +26,36 @@ public class UserService {
         return userDao.findById(id).orElseThrow();
     }
 
-    public String create (User user) throws Exception {
+    public Status create (User user) throws Exception {
         if (userDao.existsByEmail(user.getEmail())) {
-            throw new Exception("El email ya está en uso.");
+            return new Status(false, Messages.EMAIL_EN_USO.getTexto(), 400);
         }
 
         User finalUser = new User(user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate());
         finalUser.setActive(true);
         finalUser.setRoleId(roleService.findById((long) RoleId.USER.ordinal() + 1));
         userDao.save(finalUser);
-        return "Usuario creado con éxito!";
+        return new Status(true, Messages.CREADO_USUARIO.getTexto(), 201);
     }
 
     public Status delete (Long id) {
         User userToDelete = findById(id);
         if (userToDelete == null) {
-            return new Status(false, "El usuario no existe.", 500);
+            return new Status(false, Messages.USUARIO_INEXISTENTE.getTexto(), 500);
         }
         if (!userToDelete.getActive()) {
-            return new Status(false, "El usuario ya está inactivo.", 500);
+            return new Status(false, Messages.USUARIO_YA_INACTIVO.getTexto(), 500);
         }
         userToDelete.setActive(false);
         userDao.save(userToDelete);
 
-        return new Status(true, "Usuario borrado con éxito.", 200);
+        return new Status(true, Messages.USUARIO_BORRADO.getTexto(), 200);
     }
 
-    public String update (User user, Long id) throws Exception {
+    public Status update (User user, Long id) throws Exception {
         User userToUpdate = findById(id);
         if (userToUpdate == null) {
-            throw new Exception("El usuario no existe.");
+            return new Status(false, Messages.USUARIO_INEXISTENTE.getTexto(), 404);
         }
 
         userToUpdate.setUsername(user.getUsername());
@@ -64,6 +65,6 @@ public class UserService {
 
         userDao.save(userToUpdate);
 
-        return "Usuario modificado con éxito.";
+        return new Status(true, Messages.USUARIO_MODIFICADO.getTexto(), 200);
     }
 }
