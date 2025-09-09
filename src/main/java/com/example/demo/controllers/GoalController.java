@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class GoalController {
     private GoalService goalService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createController (@RequestBody GoalDto goal) {
+    public ResponseEntity<Status> createController (@RequestBody GoalDto goal) {
         try {
             return new ResponseEntity<>(goalService.create(goal), HttpStatus.CREATED);
         } catch (Exception e) {

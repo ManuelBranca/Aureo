@@ -26,7 +26,7 @@ public class UserService {
         return userDao.findById(id).orElseThrow();
     }
 
-    public Status create (User user) throws Exception {
+    public Status create (User user) {
         if (userDao.existsByEmail(user.getEmail())) {
             return new Status(false, Messages.EMAIL_EN_USO.getTexto(), 400);
         }
@@ -52,7 +52,7 @@ public class UserService {
         return new Status(true, Messages.USUARIO_BORRADO.getTexto(), 200);
     }
 
-    public Status update (User user, Long id) throws Exception {
+    public Status update (User user, Long id) {
         User userToUpdate = findById(id);
         if (userToUpdate == null) {
             return new Status(false, Messages.USUARIO_INEXISTENTE.getTexto(), 404);

@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import java.util.List;
 
+import com.example.demo.enums.Messages;
+import com.example.demo.models.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +23,12 @@ public class GoalService {
         return (List<Goal>) goalDao.findGoalsByUser(id);
     }
 
-    public String create(GoalDto goal) throws Exception {
+    public Status create(GoalDto goal) {
         // if(goalDao.findGoalByName(goal.getName()))
         User searchedUser = userService.findById(goal.getUserId());
         
         if(searchedUser == null){
-            throw new Exception("El usuario no existe");
+            return new Status(false, Messages.USUARIO_INEXISTENTE.getTexto(), 404);
         }
 
         Goal finalGoal = 
@@ -39,6 +41,6 @@ public class GoalService {
         );
 
         goalDao.save(finalGoal);
-        return "Meta creada con éxito!";
+        return new Status(true, Messages.META_CREADA.getTexto(), 201);
     }
 }
