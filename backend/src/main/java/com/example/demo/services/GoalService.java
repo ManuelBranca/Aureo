@@ -28,7 +28,7 @@ public class GoalService {
         User searchedUser = userService.findById(goal.getUserId());
         
         if(searchedUser == null){
-            return new Status(false, Messages.USUARIO_INEXISTENTE.getTexto(), 404);
+            return new Status(false, Messages.USER_NOT_FOUND.getTexto(), 404);
         }
 
         Goal finalGoal = 
@@ -41,6 +41,6 @@ public class GoalService {
         );
 
         goalDao.save(finalGoal);
-        return new Status(true, Messages.META_CREADA.getTexto(), 201);
+        return new Status(true, Messages.GOAL_CREATED.getTexto(), 201);
     }
 }
