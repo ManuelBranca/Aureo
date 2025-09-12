@@ -6,6 +6,7 @@ import com.example.demo.enums.RoleId;
 import com.example.demo.models.Status;
 import com.example.demo.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class UserService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<User> findAll () {
         return (List<User>) userDao.findAll();
@@ -30,8 +34,8 @@ public class UserService {
         if (userDao.existsByEmail(user.getEmail())) {
             return new Status(false, Messages.EMAIL_IN_USE.getTexto(), 400);
         }
-
-        User finalUser = new User(user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        User finalUser = new User(user.getUsername(), user.getEmail(), encodedPassword, user.getBirthDate());
         finalUser.setActive(true);
         finalUser.setRoleId(roleService.findById((long) RoleId.USER.ordinal() + 1));
         userDao.save(finalUser);
