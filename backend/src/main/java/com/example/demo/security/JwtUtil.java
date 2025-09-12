@@ -2,6 +2,8 @@ package com.example.demo.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -9,23 +11,27 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET_KEY = "unaClaveMuySecretaYSeguraDeAlMenos32Caracteres123";
+    @Value("${jwt.secret}")
+    private String secretKey;
+
     private static final Long EXPIRATION_TIME = (long) 1000 * 60 * 60; // 1 hora
 
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key)
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -34,7 +40,7 @@ public class JwtUtil {
 
     public boolean validateToken(String token) {
     try {
-        Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+        Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
         return true;
     } catch (JwtException | IllegalArgumentException e) {
         return false;
