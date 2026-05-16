@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User findById (Long id){
-        return userDao.findById(id).orElseThrow();
+        return userDao.findById(id).orElse(null);
     }
 
     public Status create (User user) {

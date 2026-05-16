@@ -2,7 +2,7 @@
   "name": "aureo",
   "private": true,
   "scripts": {
-    "start:backend": "cd backend && mvnw spring-boot:run",
+    "start:backend": "cd backend && set MAVEN_USER_HOME=%cd%\\.m2 && .\\mvnw.cmd spring-boot:run",
     "start:frontend": "cd frontend && npm run dev",
     "start:all": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
   },

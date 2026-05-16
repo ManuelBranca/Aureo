@@ -24,9 +24,8 @@ public class GoalService {
     }
 
     public Status create(GoalDto goal) {
-        // if(goalDao.findGoalByName(goal.getName()))
         User searchedUser = userService.findById(goal.getUserId());
-        
+
         if(searchedUser == null){
             return new Status(false, Messages.USER_NOT_FOUND.getTexto(), 404);
         }

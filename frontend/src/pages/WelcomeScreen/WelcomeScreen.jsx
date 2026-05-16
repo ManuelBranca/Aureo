@@ -1,38 +1,37 @@
-// src/pages/WelcomeScreen.jsx
-import { useNavigate } from "react-router-dom";
-import { WELCOMESCREEN_TEXTS } from "../../constants/Messages";
-import "./WelcomeScreen.css";
-import aureoLogo from '../../assets/aureo-logo.png';
+import { Link } from 'react-router-dom'
+import { usePreferences } from '../../context/PreferencesContext'
+import './WelcomeScreen.css'
+import aureoLogo from '../../assets/aureo-logo.png'
 
 function WelcomeScreen() {
-    const navigate = useNavigate();
+  const { t } = usePreferences()
 
-    return (
-        <div className="welcome-container">
-            
-            <img src={aureoLogo} alt="AUREO logo" className="welcome-logo" />
-
-            <h1 className="welcome-title">
-                {WELCOMESCREEN_TEXTS.title || "Bienvenidos a AUREO"}
-            </h1>
-            <h2 className="welcome-subtitle">Tu app de finanzas personales</h2>
-
-            <div className="welcome-buttons">
-                <button
-                    className="btn btn-primary"
-                    onClick={() => navigate("/register")}
-                >
-                    Registrarse
-                </button>
-                <button
-                    className="btn btn-secondary"
-                    onClick={() => navigate("/login")}
-                >
-                    Iniciar Sesión
-                </button>
-            </div>
+  return (
+    <main className="welcome-shell">
+      <section className="welcome-card">
+        <div className="welcome-badge">{t('brand')}</div>
+        <div className="welcome-logo-wrap">
+          <img src={aureoLogo} alt="Aureo" className="welcome-logo" />
         </div>
-    );
+        <h1 className="welcome-title">{t('brand')}</h1>
+        <p className="welcome-copy">
+          {t('financeDescription')}
+        </p>
+
+        <div className="welcome-actions">
+          <Link className="welcome-button welcome-button-primary" to="/login">
+            {t('login')}
+          </Link>
+          <Link className="welcome-button welcome-button-secondary" to="/register">
+            {t('register')}
+          </Link>
+          <Link className="welcome-button welcome-button-secondary" to="/app">
+            {t('openApp')}
+          </Link>
+        </div>
+      </section>
+    </main>
+  )
 }
 
-export default WelcomeScreen;
+export default WelcomeScreen

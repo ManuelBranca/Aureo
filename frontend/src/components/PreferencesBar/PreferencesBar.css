@@ -1,0 +1,103 @@
+.preferences-fab {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+}
+
+.preferences-fab-button {
+  width: 48px;
+  height: 48px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: linear-gradient(180deg, var(--panel), var(--panel-strong));
+  color: var(--text);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  font-size: 1.05rem;
+}
+
+.preferences-fab-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(138, 231, 197, 0.36);
+}
+
+.preferences-fab-button:focus-visible {
+  outline: 3px solid rgba(138, 231, 197, 0.28);
+  outline-offset: 2px;
+}
+
+.preferences-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: min(260px, calc(100vw - 32px));
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid var(--panel-border);
+  background: linear-gradient(180deg, var(--panel), var(--panel-strong));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  display: grid;
+  gap: 14px;
+}
+
+.preferences-section {
+  display: grid;
+  gap: 10px;
+}
+
+.preferences-label {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--muted);
+}
+
+.preferences-switcher {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.preferences-option {
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 11px 12px;
+  background: var(--input-bg);
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.preferences-option:hover {
+  transform: translateY(-1px);
+  border-color: rgba(138, 231, 197, 0.36);
+}
+
+.preferences-option.is-active {
+  background: linear-gradient(135deg, rgba(138, 231, 197, 0.18), rgba(187, 247, 227, 0.12));
+  border-color: rgba(138, 231, 197, 0.42);
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .preferences-fab {
+    top: 12px;
+    right: 12px;
+  }
+
+  .preferences-fab-button {
+    width: 46px;
+    height: 46px;
+  }
+
+  .preferences-popover {
+    width: min(272px, calc(100vw - 24px));
+  }
+}
