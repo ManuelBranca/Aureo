@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,15 +17,17 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
     private String username;
     private String email;
     private String password;
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
     private Boolean active;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "roleId")
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role roleId;
 
     public User(String username, String email, String password, Date birthDate) {

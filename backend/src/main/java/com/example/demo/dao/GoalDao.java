@@ -12,7 +12,7 @@ import com.example.demo.models.Goal;
 @Repository
 public interface GoalDao extends CrudRepository<Goal,Long>{
 
-    @Query("SELECT g FROM Goal g WHERE g.userId = :id")
+    @Query("SELECT g FROM Goal g WHERE g.userId.userId = :id")
     List<Goal> findGoalsByUser (@Param("id") Long id);
 
     @Query("SELECT COUNT(g) > 0 FROM Goal g WHERE g.name = :name")

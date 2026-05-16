@@ -29,7 +29,8 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<Status> createController (@RequestBody User user) {
         try {
-            return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
+            Status status = userService.create(user);
+            return new ResponseEntity<>(status, HttpStatus.valueOf(status.getCodeNumber()));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -38,9 +39,10 @@ public class UserController {
     @PutMapping("/delete")
     public ResponseEntity<Status> delete (@RequestParam Long id) {
         try {
-            return new ResponseEntity<>(userService.delete(id), HttpStatus.OK);
+            Status status = userService.delete(id);
+            return new ResponseEntity<>(status, HttpStatus.valueOf(status.getCodeNumber()));
         } catch (Exception e) {
-            return new ResponseEntity<>(userService.delete(id) ,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

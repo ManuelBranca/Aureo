@@ -1,0 +1,4 @@
+.auth-grid-single {
+  grid-template-columns: minmax(0, 520px);
+  justify-content: center;
+}
